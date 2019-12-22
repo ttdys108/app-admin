@@ -1,12 +1,14 @@
 <template>
-  <div id="app">
-    <router-view/>
+  <div>
+    dict
   </div>
+
 </template>
 
 <script>
 export default {
-  name: 'App',
+
 
 }
+
 </script>
