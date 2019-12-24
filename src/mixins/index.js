@@ -4,13 +4,21 @@ export default {
   data() {
     return {
       isLoading: false, //el loading,
+      pageNo: 1,
+      pageSize: 10,
+      totalCount: -1,
     }
 
   },
   computed: {
     ...mapState({
       dict: state => state.i18n.dict
-             })
+             }),
+    requiredRule() {
+      return {
+        required: true, message: this.dict.v_required, trigger: 'blur'
+      }
+    }
   },
 
   methods: {
@@ -32,6 +40,16 @@ export default {
         if(new Date() > expires)
           break;
       }
+    },
+    isEmpty(val) {
+      if(val === null || val === undefined)
+        return true;
+      if(val === '' || val.trim() === '')
+        return true;
+      return false;
+    },
+    isSucceed(resp) {
+      return resp && resp.code === '000000';
     }
 
   }

@@ -10,6 +10,7 @@ const i18n = {
     locale: Cookies.get(Config.localeCookieAttr) || Config.defaultLocale,//当前locale
     dict: [], //当前dict
     totalDicts: {}, //格式: {'zh_CN':[], 'en': []}
+    supportLocales: []
   },
 
   mutations: {
@@ -21,7 +22,11 @@ const i18n = {
     setDicts: (state, dicts) => {
       state.totalDicts = dicts;
       state.dict = dicts[state.locale];
-    }
+    },
+    setSupportLocales: (state, locales) => {
+      state.supportLocales = locales;
+      console.log(locales)
+    },
 
   },
 
@@ -31,6 +36,9 @@ const i18n = {
     },
     SET_LOCALE({commit}, locale) {
       commit('setLocale', locale);
+    },
+    SET_SUPPORT_LOCALES({commit}, locales) {
+      commit('setSupportLocales', locales);
     }
 
   }

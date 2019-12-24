@@ -32,6 +32,7 @@ export default {
       type: 'lang'
     }).then(resp => {
       this.locales = resp.data;
+      this.$store.dispatch('i18n/SET_SUPPORT_LOCALES', resp.data);
     })
 
   }

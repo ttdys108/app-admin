@@ -16,7 +16,8 @@ Vue.use(Router)
 NProgress.configure({ showSpinner: false })// NProgress Configuration
 
 const publicPaths = [
-  // '/', '/index', '/dashboard', '/login'
+  // '/', '/index', '/dashboard',
+  '/login'
 ]
 
 const router = new Router({

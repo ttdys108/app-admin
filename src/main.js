@@ -7,6 +7,7 @@ import ElementUI from 'element-ui'
 import store from './store'
 import Fragment from 'vue-fragment'
 import mixins from '@/mixins'
+import elTableInfiniteScroll from 'el-table-infinite-scroll';
 
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/style/admin.css'
@@ -16,6 +17,7 @@ Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(Fragment.Plugin)
 Vue.mixin(mixins)
+Vue.use(elTableInfiniteScroll)
 
 /* eslint-disable no-new */
 let v = new Vue({

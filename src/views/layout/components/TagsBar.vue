@@ -28,6 +28,9 @@ export default {
     })
 
   },
+  created() {
+    this.LOG('cache', this.cachedMenus);
+  },
   methods: {
 
   }

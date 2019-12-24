@@ -22,7 +22,7 @@ const menus = {
       if(state.cached.some( m => m.path === path))
         return;
       let menu = state.menuMap[path];
-      state.cached.push(menu);
+      menu && state.cached.push(menu);
     },
     removeCache: (state, path) => {
       for(let i in state.cached) {
