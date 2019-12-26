@@ -27,7 +27,7 @@ create table tbl_dict(
 drop table if exists tbl_menu;
 create table tbl_menu(
 	id bigint not null primary key auto_increment,
-	code varchar(32) not null,
+	code varchar(32) not null unique,
 	auth varchar(64),
 	description varchar(64) not null,
 	parent bigint,

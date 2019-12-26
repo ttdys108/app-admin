@@ -13,7 +13,9 @@
           v-el-table-infinite-scroll="fetchDicts"
           infinite-scroll-delay="500"
           :loading="isLoading"
+          height="500px"
         >
+          <el-table-column :show-overflow-tooltip="true" width="50" type="index"></el-table-column>
           <el-table-column :show-overflow-tooltip="true" width="150" prop="key" :label="dict.label_key"></el-table-column>
           <el-table-column :show-overflow-tooltip="true" width="180" prop="value" :label="dict.label_value"></el-table-column>
           <el-table-column :show-overflow-tooltip="true" width="150" :label="dict.label_locale">
@@ -28,7 +30,9 @@
 
               <el-popconfirm
                 icon="el-icon-warning-outline"
-                title="确定删除该项吗?"
+                :title="dict.confirm_delete"
+                :confirmButtonText="dict.action_delete"
+                :cancelButtonText="dict.cancel"
                 @onConfirm="del(scope.row.key)"
               >
                 <a slot="reference">{{ dict.action_delete }}</a>
@@ -81,7 +85,7 @@ export default {
         pageNo: this.pageNo,
         pageSize: this.pageSize,
       }
-      if(!this.isEmpty(this.query))
+      if(this.query !== '')
         params.query = this.query;
       query(params).then(resp => {
         this.dicts = this.dicts.concat(resp.data.results);

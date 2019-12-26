@@ -55,7 +55,7 @@ export default {
     keyRules() {
       let keyValidator = (rule, value, callback) => {
         if(!/^(?!\d)[a-zA-Z0-9_]+$/.test(value))
-          callback(new Error('请输入字母,数字和下划线'));
+          callback(new Error(dict.tips_common_char));
         else
           callback();
       }
@@ -80,13 +80,14 @@ export default {
     },
     show(actionType, key) {
       this.visible = true;
-      if(actionType === 'add' && this.actionType !== actionType) {
-        this.form = this.initForm();
-      } else {
+      if(actionType === 'add') { //新增
+        if(this.actionType !== actionType)
+          this.form = this.initForm();
+      } else {//修改
         if(actionType === 'edit' && this.form.dictKey === key)
           return; //复用原来的页面数据
         queryForUpdate(key).then(resp => {
-          if(this.isSucceed(resp)) {
+          if(this.IS_SUCCEED(resp)) {
             this.form = {
               dictKey: resp.data.key,
               localeMap: resp.data.localeValueMap,

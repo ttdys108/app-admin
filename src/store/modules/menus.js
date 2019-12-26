@@ -1,3 +1,5 @@
+import { queryAll } from '@/api/menu'
+
 const menus = {
   namespaced: true,
 
@@ -43,7 +45,14 @@ const menus = {
     },
     REMOVE_CACHE_MENU({commit}, path) {
       commit('removeCache', path);
-    }
+    },
+    RELOAD_MENUS({commit}) {
+      queryAll().then(resp => {
+        commit('setMenus', resp.data);
+      }).catch(err => {
+        console.error(err);
+      })
+    },
   }
 
 }

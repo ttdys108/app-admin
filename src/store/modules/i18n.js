@@ -25,7 +25,7 @@ const i18n = {
     },
     setSupportLocales: (state, locales) => {
       state.supportLocales = locales;
-      console.log(locales)
+      // console.log(locales)
     },
 
   },
