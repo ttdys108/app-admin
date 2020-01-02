@@ -93,7 +93,7 @@
       <el-row>
         <el-col :span="24">
           <el-form-item>
-            <el-button :loading="isLoading" type="primary" @click="submit">{{ dict.action_submit }}</el-button>
+            <el-button :loading="loading" type="primary" @click="submit">{{ dict.action_submit }}</el-button>
           </el-form-item>
         </el-col>
       </el-row>
@@ -108,8 +108,12 @@
 <script>
 import { add, queryStatus, update } from '@/api/menu'
 import elIcons from './el-icons'
+import mixins from '@/mixins'
 
 export default {
+  mixins: [
+    mixins,
+  ],
   data() {
     return {
       form: this.initForm(),
@@ -169,7 +173,7 @@ export default {
       this.$refs.form.validate(valid => {
         if(!valid)
           return;
-        this.isLoading = true;
+        this.loading = true;
         let action = this.actionType === 'add' ? add : update;
         action(this.form).then(resp => {
           if(resp.code === '000000') {
@@ -180,10 +184,10 @@ export default {
             this.$notify.error(resp.msg)
           }
 
-          this.isLoading = false;
+          this.loading = false;
         }).catch(err => {
           this.LOG('add dict error', err);
-          this.isLoading = false;
+          this.loading = false;
         })
 
       })

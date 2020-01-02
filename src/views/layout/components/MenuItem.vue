@@ -20,9 +20,13 @@
 
 <script>
 import { mapState } from 'vuex'
+import mixins from '@/mixins'
 
 export default {
   name: 'menu-item',
+  mixins: [
+    mixins,
+  ],
   props: {
     menu: {
       type: Object,

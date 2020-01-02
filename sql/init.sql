@@ -11,7 +11,6 @@ create table tbl_config(
  update_time datetime on update current_timestamp
 )
 
-
 drop table if exists tbl_dict;
 create table tbl_dict(
 	id bigint not null primary key auto_increment,
@@ -58,3 +57,14 @@ create table tbl_user(
 create index idx_user_name on tbl_user(username);
 create index idx_user_account on tbl_user(account);
 create index idx_user_mobile on tbl_user(mobile);
+
+drop table if exists tbl_authr;
+create table tbl_authr(
+ id bigint not null primary key auto_increment,
+ user_id bigint not null,
+ resource varchar(128) not null,
+ authr integer not null default 0,
+ create_time datetime not null default current_timestamp,
+ update_time datetime on update current_timestamp
+);
+create index idx_authr_uid on tbl_authr(user_id);

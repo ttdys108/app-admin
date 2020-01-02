@@ -26,7 +26,7 @@
         <el-input v-model="form.desc"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button :loading="isLoading" type="primary" @click="submit">{{ dict.action_submit }}</el-button>
+        <el-button :loading="loading" type="primary" @click="submit">{{ dict.action_submit }}</el-button>
       </el-form-item>
     </el-form>
   </el-dialog>
@@ -35,9 +35,12 @@
 <script>
 import { mapState } from 'vuex'
 import { add, query, queryForUpdate, update } from '@/api/dict'
+import mixins from '@/mixins'
 
 export default {
-  ///^(?!\d)[a-zA-Z0-9_]+$/
+  mixins: [
+    mixins,
+  ],
   data() {
     return {
       form: this.initForm(),
@@ -45,6 +48,7 @@ export default {
       actionType: 'add',
     }
   },
+
   computed: {
     title() {
       return this.actionType === 'add' ? this.dict.title_add_dict : this.dict.title_edit_dict;
@@ -117,7 +121,7 @@ export default {
           localeValueMap: this.form.localeMap,
           desc: this.form.desc,
         }
-        this.isLoading = true;
+        this.loading = true;
         let action = this.actionType === 'add' ? add : update;
         action(params).then(resp => {
           if(resp.code === '000000') {
@@ -128,10 +132,10 @@ export default {
             this.$notify.error(resp.msg)
           }
 
-          this.isLoading = false;
+          this.loading = false;
         }).catch(err => {
           this.LOG('add dict error', err);
-          this.isLoading = false;
+          this.loading = false;
         })
 
       })

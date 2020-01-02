@@ -29,23 +29,24 @@ router.beforeEach((to, from, next) => {
   NProgress.start();
   //初始化
   if(!this.inited) {
-    initRouter();
+    initRouter(to, from, next);
     initDict();
     this.inited = true;
-  }
-
-  //无需登录
-  if(publicPaths.indexOf(to.path) >= 0) {
-    next();
-
-  }else if(!AuthUtils.isLogin()) {//未登录
-    next({
-      path: '/login',
-      query: { redirect: to.fullPath }
-    });
   } else {
-    next();
+    //无需登录
+    if(publicPaths.indexOf(to.path) >= 0) {
+      next();
+
+    }else if(!AuthUtils.isLogin()) {//未登录
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      });
+    } else {
+      next();
+    }
   }
+
 })
 
 router.afterEach((to, from) => {
@@ -60,7 +61,7 @@ function initDict() {
   });
 }
 
-function initRouter() {
+function initRouter(to, from, next) {
   queryMenus().then(resp => {
     store.dispatch('menus/SET_MENUS', resp.data);
     let routes = [{
@@ -85,6 +86,7 @@ function initRouter() {
         }
       ]
     );
+    next({ ...to, replace: true }); //初始化完成redirect
   })
 }
 

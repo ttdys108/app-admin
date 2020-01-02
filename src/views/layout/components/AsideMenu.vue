@@ -18,11 +18,15 @@
 <script>
 import MenuItem from './MenuItem'
 import { mapState } from 'vuex'
+import mixins from '@/mixins'
 
 export default {
   components: {
     MenuItem
   },
+  mixins: [
+    mixins,
+  ],
   props: {
     collapse: false
   },

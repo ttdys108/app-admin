@@ -15,9 +15,13 @@
 </template>
 <script>
 import { AuthUtils } from "@/utils";
+import mixins from '@/mixins'
 
 export default {
   name: 'Logout',
+  mixins: [
+    mixins,
+  ],
   data() {
     return {
       visible: false,

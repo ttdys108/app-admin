@@ -1,6 +1,6 @@
 <template>
 <el-row class="tags-bar" :style="'height:'+height">
-  <el-tag @close="$store.dispatch('menus/REMOVE_CACHE_MENU', menu.path)" @click="$router.push(menu.path)" class="tags cursor-p" effect="dark" closable
+  <el-tag @close="$store.dispatch('menus/REMOVE_CACHE_MENU', menu.path)" @click="to(menu.path)" class="tags cursor-p" effect="dark" closable
           v-for="menu in cachedMenus" :key="menu.id">{{ dict[menu.code] }}</el-tag>
 </el-row>
 
@@ -8,9 +8,13 @@
 
 <script>
 import { mapState } from 'vuex'
+import mixins from '@/mixins'
 
 export default {
   name: 'TagsBar',
+  mixins: [
+    mixins,
+  ],
   props: {
     height: {
       type: String,
@@ -32,6 +36,11 @@ export default {
     // this.LOG('cache', this.cachedMenus);
   },
   methods: {
+    to(path) {
+      if(this.$route.path === path)
+        return;
+      this.$router.push(path);
+    }
 
   }
 }

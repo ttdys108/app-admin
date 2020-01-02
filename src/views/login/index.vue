@@ -26,11 +26,11 @@
             <el-checkbox v-model="form.rememberMe" :label="dict.remember_me"></el-checkbox>
         </el-form-item>
         <el-form-item v-if="!isRegister">
-          <el-button :loading="isLoading" class="w-100" type="primary" @click="doLogin">{{ dict.login }}</el-button>
+          <el-button :loading="loading" class="w-100" type="primary" @click="doLogin">{{ dict.login }}</el-button>
           <span><a @click="changeForm">{{ dict.to_register }}</a></span>
         </el-form-item>
         <el-form-item v-if="isRegister">
-          <el-button :loading="isLoading" class="w-100" type="primary" @click="doRegister">{{ dict.register }}</el-button>
+          <el-button :loading="loading" class="w-100" type="primary" @click="doRegister">{{ dict.register }}</el-button>
           <span>{{ dict.to_login }}<a @click="changeForm">{{ dict.login }}</a></span>
         </el-form-item>
       </el-form>
@@ -43,11 +43,15 @@
 import LocaleSelector from '@/components/LocaleSelector'
 import { login, register } from '@/api/login'
 import { AuthUtils } from '@/utils'
+import mixins from '@/mixins'
 
 export default {
   components: {
     LocaleSelector
   },
+  mixins: [
+    mixins,
+  ],
   data(){
     return {
       form: {
@@ -116,7 +120,7 @@ export default {
       this.$refs['loginForm'].validate(valid => {
         if(!valid) //校验不通过
           return;
-        this.isLoading = true;
+        this.loading = true;
         submitFunc(this.form).then(resp => {
           if(resp.code === '000000') {
             callback(resp);
@@ -126,10 +130,10 @@ export default {
               title: resp.msg
             })
           }
-          this.isLoading = false;
+          this.loading = false;
         }).catch(err => {
           console.log(err);
-          this.isLoading = false;
+          this.loading = false;
         })
       })
     },

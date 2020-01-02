@@ -54,11 +54,15 @@
 <script>
 import eForm from './components/eForm'
 import { del as deleteMenu } from '@/api/menu'
+import mixins from '@/mixins'
 
 export default {
   components: {
     eForm,
   },
+  mixins: [
+    mixins,
+  ],
   data() {
     return {
       treeProps: {
@@ -130,7 +134,7 @@ export default {
 .menu-container{
   margin: 10px auto;
   padding: 10px 20px;
-  width: 860px;
+  width: 70%;
   min-height: 500px;
 }
 .custom-tree-node span{

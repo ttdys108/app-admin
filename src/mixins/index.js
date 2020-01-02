@@ -3,7 +3,7 @@ import { mapState } from 'vuex'
 export default {
   data() {
     return {
-      isLoading: false, //el loading,
+      loading: false, //el loading,
       pageNo: 1,
       pageSize: 10,
       totalCount: -1,
@@ -64,6 +64,12 @@ export default {
     },
     IS_SUCCEED(resp) {
       return resp && resp.code === '000000';
+    },
+    NOTIFY_SUCCEED() {
+      this.$notify({
+        message: this.dict.tips_submit_success,
+        type: 'success'
+      })
     }
 
   }

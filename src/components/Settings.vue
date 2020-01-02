@@ -13,7 +13,12 @@
 
 <script>
 import screenfull from 'screenfull'
+import mixins from '@/mixins'
+
 export default {
+  mixins: [
+    mixins,
+  ],
   data() {
     return {
       visible: false,

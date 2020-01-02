@@ -16,6 +16,7 @@
 
 <script>
 import { LocaleSelector, Logout, Settings } from '@/components'
+import mixins from '@/mixins'
 
 export default {
   name: 'HeaderBar',
@@ -24,6 +25,9 @@ export default {
     Logout,
     Settings,
   },
+  mixins: [
+    mixins,
+  ],
   props: {
     height: {
       type: String,

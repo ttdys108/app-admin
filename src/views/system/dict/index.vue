@@ -1,5 +1,5 @@
 <template>
-  <div class="box-shadow mt-10" style="width: 900px; margin:auto">
+  <div class="box-shadow mt-10" style="width: 70%; margin:auto">
     <el-row type="flex" justify="center">
       <el-col class="bg-white pt-10">
         <el-input @input="queryDicts" v-model="query" class="m-10" style="width:200px;" prefix-icon="el-icon-search" :placeholder="dict.placeholder_search"/>
@@ -12,8 +12,8 @@
           :data="dicts"
           v-el-table-infinite-scroll="fetchDicts"
           infinite-scroll-delay="500"
-          :loading="isLoading"
-          height="500px"
+          :loading="loading"
+          height="700px"
         >
           <el-table-column :show-overflow-tooltip="true" width="50" type="index"></el-table-column>
           <el-table-column :show-overflow-tooltip="true" width="150" prop="key" :label="dict.label_key"></el-table-column>
@@ -53,11 +53,15 @@
 import eForm from './components/eForm'
 import { query, del as deleteDict } from '@/api/dict'
 import { mapState } from 'vuex'
+import mixins from '@/mixins'
 
 export default {
   components: {
     eForm,
   },
+  mixins: [
+    mixins,
+  ],
 
   data() {
     return {
@@ -75,6 +79,9 @@ export default {
         return map;
       }
              })
+  },
+  created() {
+    this.pageSize = 50;
   },
   methods: {
     fetchDicts() {
@@ -105,7 +112,7 @@ export default {
     },
     del(key) {
       this.LOG('del', key);
-      this.isLoading = true;
+      this.loading = true;
       deleteDict(key).then(resp => {
         if(this.isSucceed(resp)) {
           this.reload();
@@ -113,10 +120,10 @@ export default {
           this.$notify,error(resp.msg)
         }
 
-        this.isLoading = false;
+        this.loading = false;
       }).catch(err => {
         this.LOG('del dict err', err);
-        this.isLoading = false;
+        this.loading = false;
       })
 
     },

@@ -8,9 +8,13 @@
 
 <script>
 import { query } from '@/api/config'
+import mixins from '@/mixins'
 
 export default {
   name: 'locale-selector',
+  mixins: [
+    mixins,
+  ],
   props: {
     width: {
       type: String,

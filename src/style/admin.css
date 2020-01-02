@@ -90,6 +90,9 @@ a:focus{
 .none{
   display: none;
 }
+.flex{
+  display: flex;
+}
 .f-right{
   float: right;
 }
