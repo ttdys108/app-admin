@@ -21,7 +21,12 @@ const publicPaths = [
 ]
 
 const router = new Router({
-  routes: [],
+  routes: [
+    {
+      path: '/login',
+      component: Login
+    }
+  ],
   inited: false
 })
 
@@ -78,13 +83,7 @@ function initRouter(to, from, next) {
       children: routes
     };
     router.addRoutes(
-      [
-        rootRoute,
-        {
-          path: '/login',
-          component: Login
-        }
-      ]
+      [ rootRoute ]
     );
     next({ ...to, replace: true }); //初始化完成redirect
   })

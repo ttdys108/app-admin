@@ -9,7 +9,7 @@
         <el-form-item prop="username" :rules="usernameRules">
           <el-input prefix-icon="el-icon-user-solid" :placeholder="dict.login_username" v-model="form.username"></el-input>
         </el-form-item>
-        <el-form-item prop="password" :rules="passwordRules" :class="{'mb-0': !isRegister}">
+        <el-form-item prop="password" :rules="passwordRules">
           <el-input prefix-icon="el-icon-lock" :type="passwordType" :placeholder="dict.login_password" v-model="form.password">
           </el-input>
           <i v-if="isRegister" :class="viewIconClass" @click="showPassword=!showPassword"></i>
@@ -21,6 +21,18 @@
             <i v-if="isRegister" :class="viewIconClass" @click="showPassword=!showPassword"></i>
           </el-form-item>
         </fragment>
+
+        <el-form-item prop="vcode">
+          <el-col :span="8">
+            <el-input class="" maxlength="6" v-model="form.vcode" :placeholder="dict.vcode"></el-input>
+          </el-col>
+          <el-col :span="11">
+            <el-image style="width: 100px;" :src="vcodeUrl"></el-image>
+          </el-col>
+          <el-col :span="4">
+            <a @click="reloadVCode">换一张</a>
+          </el-col>
+        </el-form-item>
 
         <el-form-item v-if="!isRegister" class="text-left">
             <el-checkbox v-model="form.rememberMe" :label="dict.remember_me"></el-checkbox>
@@ -59,10 +71,12 @@ export default {
         password: '',
         passwordConfirm: '',
         rememberMe: false,
-        type: 'USERNAME'
+        type: 'USERNAME',
+        vcode: ''
       },
       isRegister: false,
       showPassword: false,
+      v: 0
     }
   },
   computed: {
@@ -99,7 +113,11 @@ export default {
     },
     passwordType(){
       return this.showPassword ? 'text' : 'password';
+    },
+    vcodeUrl() {
+      return '/api/vcode?v=' + this.v;
     }
+
   },
   methods: {
     doLogin() {
@@ -144,6 +162,10 @@ export default {
       this.$refs['loginForm'].resetFields();
     },
 
+    reloadVCode() {
+      this.v = Math.random();
+    }
+
   }
 
 }
@@ -177,6 +199,10 @@ a{
 }
 a:hover{
   cursor: pointer;
+}
+.vcode{
+  width: 120px;
+  left: -60px;
 }
 
 </style>

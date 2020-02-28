@@ -2,6 +2,7 @@ import axios from 'axios'
 import Config from '@/config'
 import { AuthUtils } from '@/utils'
 import { Notification } from 'element-ui'
+import router from '@/router'
 
 const request = axios.create({
   baseURL: process.env.API_HOST,
@@ -36,10 +37,14 @@ request.interceptors.response.use(
     }
   },
   err => {
-    Notification.error({
-      title: err
-    })
-    return Promise.reject(err);
+    if(err.response.status === 401) {
+      router.replace('/login')
+    } else {
+      Notification.error({
+        title: err
+      })
+      return Promise.reject(err);
+    }
   }
 
 
